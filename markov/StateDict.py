@@ -1,31 +1,17 @@
-from collections import deque, Counter
+from collections import defaultdict, Counter
 
-from WeightedRandomizer import WeightedRandomizer
+from CompiledStateDict import CompiledStateDict
 
 
 class StateDict:
     """
     A state to future mapping representing a n-th order Markov chain.
+
+    Used as an intermediary in the building process, a StateDict object
+    should be compiled via `StateDict.compile()` before use.
     """
-    def __init__(self, states=None):
-        self._states = states if states else {}
-
-    def __getitem__(self, state):
-        """
-        Predict the future element for a given state.
-
-        Collapses the given state until it can find one for which probable
-        futures exist (in the event a state never present in the training data
-        is encountered).
-        """
-        state = deque(state)
-
-        # Not infinite because there are always predictions for the empty state
-        while True:
-            try:
-                return self._states[tuple(state)]
-            except KeyError:
-                state.popleft()
+    def __init__(self):
+        self._states = defaultdict(Counter)
 
     def __len__(self):
         """
@@ -41,9 +27,6 @@ class StateDict:
         ex. add((a, b), c) adds (a, b) -> c, (b) -> c, () -> c
         """
         for state_chunk in self._shrink_right(state):
-            if state_chunk not in self._states:
-                self._states[state_chunk] = Counter()
-
             self._states[state_chunk][future] += 1
 
     def _shrink_right(self, state):
@@ -58,5 +41,4 @@ class StateDict:
         Compile the StateDict into one that returns randomizers (for choosing
         a weighted random future given a state).
         """
-        return StateDict({s: WeightedRandomizer(f.most_common())
-                         for s, f in self._states.iteritems()})
+        return CompiledStateDict(self._states)

@@ -1,6 +1,5 @@
 Todo List
 =========
 
-  - Split `Markov.StateDict` into compiled and noncompiled versions
   - Use a better seralization for the data
   - Optimize SQLite retrieval (generator still loads everything into memory)
