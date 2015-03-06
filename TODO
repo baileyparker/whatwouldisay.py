@@ -1,0 +1,10 @@
+Todo List
+=========
+
+  - Cache word regex in utils.text
+  - Add checking for calls to `MarkovBuilder.generate()` before any calls to `train()`
+  - Optimize cache (since n-th order is also (n - 1)th, (n-2)th, etc. order implicitly)
+  - Split `Markov.StateDict` into compiled and noncompiled versions
+  - Add pickle compression
+  - Use a better seralization for the data
+  - Optimize SQLite retrieval (generator still loads everything into memory)
