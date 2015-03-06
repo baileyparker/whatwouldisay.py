@@ -59,4 +59,7 @@ class MarkovBuilder:
         """
         Builds a `MarkovGenerator` from the currently trained chain.
         """
+        if len(self._chain) == 0:
+            raise Exception('Cannot build a generator without training data')
+
         return MarkovGenerator(self._chain.compile(), self._order)

@@ -27,6 +27,12 @@ class StateDict:
             except KeyError:
                 state.popleft()
 
+    def __len__(self):
+        """
+        Calculate the number of (state -> future) contained by the dict.
+        """
+        return len(self._states)
+
     def add(self, state, future):
         """
         Add a state and future to the chain's probabilities.
