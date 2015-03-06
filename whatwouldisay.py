@@ -2,6 +2,7 @@
 
 from argparse import ArgumentParser, ArgumentTypeError
 import pickle
+from bz2 import BZ2File
 from sys import stderr
 
 
@@ -65,7 +66,7 @@ if __name__ == '__main__':
     cache = {}
 
     try:
-        with open(CACHE_FILE, 'r') as f:
+        with BZ2File(CACHE_FILE, 'r') as f:
             cache = pickle.load(f)
 
     except:
@@ -88,7 +89,7 @@ if __name__ == '__main__':
             cache[args.order] = gen
 
             try:
-                with open(CACHE_FILE, 'w') as f:
+                with BZ2File(CACHE_FILE, 'wb') as f:
                     pickle.dump(cache, f, protocol=2)
 
             except IOError:
