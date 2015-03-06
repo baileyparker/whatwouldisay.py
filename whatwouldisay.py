@@ -10,10 +10,14 @@ from utils.imessage import get_messages_from_me
 from utils.text import get_words, make_sentences
 
 
+# Cache for `MarkovGenerator` seralized object
 CACHE_FILE = '.markov_cache.pickle'
 
 
 def positive_int(name):
+    """
+    Type for ArgumentParser that defines a positive integer.
+    """
     def inner(value):
         try:
             value = int(value)
@@ -50,6 +54,10 @@ args = arg_parser.parse_args()
 
 
 def imitate(generator, num_words):
+    """
+    Imitate a person given their iMessage Markov chain and a desired word
+    length.
+    """
     return make_sentences(generator.generate(num_words)) + '\n'
 
 
@@ -63,10 +71,12 @@ if __name__ == '__main__':
     except:
         pass
 
+    # Attempt to use the cache if available
     try:
         gen = cache[args.order]
 
     except KeyError:
+        # Generate a chain if a cached one for a given order doesn't exist
         markov = MarkovBuilder(order=args.order)
 
         for message in get_messages_from_me():
