@@ -30,7 +30,7 @@ You can also adjust the `--order` flag (which controls the greatest order of the
 
 Do be careful with memory usage, though. It grows exponentially with order due to the nature of Markov chains.
 
-Also note that for performance the script automatically caches a model for each order in `.markov_cache.pickle`. Even for a few orders, this file can grow to hundreds of megabytes in size. You can remove it without any averse side effects (other than slower future execution) or prevent its creation with the `--no-chain-cache` flag.
+Also note that for performance the script automatically caches a model for each order in `.markov_cache.pickle`. ~~Even for a few orders, this file can grow to hundreds of megabytes in size.~~ **Updated so that cache files are now compressed and optimized to be reasonably sized.** However, you can still remove it without any averse side effects (other than slower future execution) or prevent its creation with the `--no-chain-cache` flag.
 
 ## Wait...iMessage Logs?
 Yes, all of your iMessage conversations (that you haven't deleted) are stored in a [SQLite database](https://sqlite.org/) saved at `~/Library/Messages/chat.db`. By opening it up in an SQLite eidtor and performing some SQL-fu you can find out some fairly interesting things about your text/instant messaging habits (such as total words/characters sent, most popular words, most active conversations, profanity frequency, etc.).

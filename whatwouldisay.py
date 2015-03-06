@@ -63,20 +63,13 @@ def imitate(generator, num_words):
 
 
 if __name__ == '__main__':
-    cache = {}
-
     try:
         with BZ2File(CACHE_FILE, 'r') as f:
-            cache = pickle.load(f)
+            gen = pickle.load(f)
+
+        assert(args.order <= gen.order)
 
     except:
-        pass
-
-    # Attempt to use the cache if available
-    try:
-        gen = cache[args.order]
-
-    except KeyError:
         # Generate a chain if a cached one for a given order doesn't exist
         markov = MarkovBuilder(order=args.order)
 
@@ -86,11 +79,9 @@ if __name__ == '__main__':
         gen = markov.build()
 
         if args.cache:
-            cache[args.order] = gen
-
             try:
                 with BZ2File(CACHE_FILE, 'wb') as f:
-                    pickle.dump(cache, f, protocol=2)
+                    pickle.dump(gen, f, protocol=2)
 
             except IOError:
                 sys.stderr.write('ERROR: Could not write cache file\n')
