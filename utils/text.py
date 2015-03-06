@@ -22,6 +22,12 @@ def _reverse_emote(emote):
 
 # Final list of all emoticons possible
 EMOTES = EMOTES + list(filter(None, map(_reverse_emote, EMOTES)))
+EMOTES_LIST = '|'.join(map(re.escape, EMOTES))
+
+
+# Word/emoticon/punctuation token extraction regex (cached for performance)
+TOKEN_REGEX = re.compile('(' + EMOTES_LIST + r')|[\w\'\-@]+|[.,!?;:]',
+                         re.UNICODE | re.IGNORECASE)
 
 
 def get_words(string):
@@ -30,8 +36,7 @@ def get_words(string):
 
     Adapted from: http://stackoverflow.com/a/367292/568785
     """
-    regex = '(' + '|'.join(map(re.escape, EMOTES)) + r')|[\w\'\-@]+|[.,!?;:]'
-    results = re.finditer(regex, string, re.UNICODE | re.IGNORECASE)
+    results = TOKEN_REGEX.finditer(string)
     return map(lambda m: m.group(0), results)
 
 
