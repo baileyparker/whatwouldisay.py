@@ -94,6 +94,6 @@ if __name__ == '__main__':
             except IOError:
                 sys.stderr.write('ERROR: Could not write cache file\n')
 
-    sep = '\n' + ''.join(['-'] * 40) + '\n\n'
+    SEP = '\n' + ''.join(['-'] * 40) + '\n\n'
 
-    print(sep.join(imitate(gen, args.words) for _ in range(args.number)))
+    print(SEP.join(imitate(gen, args.words) for _ in range(args.number)))
