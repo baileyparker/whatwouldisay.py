@@ -33,7 +33,7 @@ Do be careful with memory usage, though. It grows exponentially with order due t
 Also note that for performance the script automatically caches a model for each order in `.markov_cache.pickle`. ~~Even for a few orders, this file can grow to hundreds of megabytes in size.~~ **Updated so that cache files are now compressed and optimized to be reasonably sized.** However, you can still remove it without any averse side effects (other than slower future execution) or prevent its creation with the `--no-chain-cache` flag.
 
 ## Wait...iMessage Logs?
-Yes, all of your iMessage conversations (that you haven't deleted) are stored in a [SQLite database](https://sqlite.org/) saved at `~/Library/Messages/chat.db`. By opening it up in an SQLite eidtor and performing some SQL-fu you can find out some fairly interesting things about your text/instant messaging habits (such as total words/characters sent, most popular words, most active conversations, profanity frequency, etc.).
+Yes, all of your iMessage conversations (that you haven't deleted) are stored in a [SQLite database](https://sqlite.org/) saved at `~/Library/Messages/chat.db`. By opening it up in an SQLite editor and performing some SQL-fu you can find out some fairly interesting things about your text/instant messaging habits (such as total words/characters sent, most popular words, most active conversations, profanity frequency, etc.).
 
 ## Variable-order...huh?
 [Markov chains](http://en.wikipedia.org/wiki/Markov_chain) are a popular CS/math paradigm that rely on current state (and the probability of numerous past outcomes of this state) to predict future states. In their simplest form (1st order), a Markov chain is a 2D matrix mapping a single state to the next state. To generate a chain, you first choose a starting state (randomly or statistically) and then check the matrix to find the most likely outcome. You report this outcome and then check the table for the next outcome that would most likely follow the outcome you just chose.
@@ -61,7 +61,7 @@ This sliding context allows for us to randomly choose the first outcome by using
 
 ## Options
 
-There are several options that `whatwoudlisay.py` can be run with to alter its output.
+There are several options that `whatwouldisay.py` can be run with to alter its output.
 
   - `--order`: The maximal order of the Markov model used (if you've never generated a model for this order before, expect a decent amount of processing time), default: `2`
   - `--number`: The number of separate imitations to ouput, default: `1`
